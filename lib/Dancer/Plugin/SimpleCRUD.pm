@@ -518,9 +518,9 @@ sub _create_add_edit_route {
     my $dbh = database($args->{db_connection_name});
 
     # a hash containing the current values in the database
-    my $default_field_values;
+    my $values_from_database;
     if ($id) {
-        $default_field_values
+        $values_from_database
             = $dbh->quick_select($table_name, { $key_column => $id });
     }
 
@@ -613,7 +613,7 @@ sub _create_add_edit_route {
     my $form = CGI::FormBuilder->new(
         fields   => \@editable_columns,
         params   => $paramsobj,
-        values   => $default_field_values,
+        values   => $values_from_database,
         validate => $validation,
         method   => 'post',
         action   => _construct_url(
@@ -627,12 +627,12 @@ sub _create_add_edit_route {
         ),
     );
     for my $field (@editable_columns) {
-        # default_field_values contains what was in the database for this object, if
-        # it already existed in the database.  $args->{default_value} is the default,
-        # if any, requested by the user for this field in the 'default_value' hash  
-        # when the route was created.
+        # values_from_database contains what was in the database for this 
+        # object, if it already existed in the database.  $args->{default_value}
+        # is the default, if any, requested by the user for this field in the 
+        # 'default_value' hash when the route was created.
         my $default = 
-              exists $default_field_values->{$field}  ? $default_field_values->{$field}
+              exists $values_from_database->{$field}  ? $values_from_database->{$field}
             : exists $args->{default_value}->{$field} ? $args->{default_value}->{$field}
             : '';
         my %field_params = (
