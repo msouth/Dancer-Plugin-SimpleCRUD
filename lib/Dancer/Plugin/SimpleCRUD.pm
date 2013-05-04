@@ -36,7 +36,7 @@ use Dancer::Plugin::Database;
 use HTML::Table::FromDatabase;
 use CGI::FormBuilder;
 
-our $VERSION = '0.80';
+our $VERSION = '0.90';
 
 =encoding utf8
 
@@ -1339,6 +1339,8 @@ saberworks
 jasonjayr
 
 Paul Johnson (pjcj)
+
+Rahul Kotamaraju
 
 Michael J South (msouth)
 
